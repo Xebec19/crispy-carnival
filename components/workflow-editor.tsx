@@ -33,7 +33,7 @@ export default function WorkflowEditor() {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+  const [reactFlowInstance, setReactFlowInstance] = useState<unknown>(null);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
   // Handle connections between nodes
@@ -59,6 +59,7 @@ export default function WorkflowEditor() {
           return;
         }
 
+        // @ts-expect-error project type is not defined
         const position = reactFlowInstance.project({
           x: event.clientX - reactFlowBounds.left,
           y: event.clientY - reactFlowBounds.top,
@@ -94,7 +95,7 @@ export default function WorkflowEditor() {
   }, [setSelectedNode]);
 
   const updateNodeProperties = useCallback(
-    (nodeId: string, properties: any) => {
+    (nodeId: string, properties: unknown) => {
       setNodes((nds) =>
         nds.map((node) => {
           if (node.id === nodeId) {

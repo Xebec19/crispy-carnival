@@ -16,7 +16,7 @@ import {
 
 type PropertiesPanelProps = {
   node: Node;
-  updateProperties: (properties: Record<string, any>) => void;
+  updateProperties: (properties: Record<string, unknown>) => void;
 };
 
 // Define property fields based on node type
@@ -60,7 +60,7 @@ export function PropertiesPanel({
   node,
   updateProperties,
 }: PropertiesPanelProps) {
-  const [properties, setProperties] = useState<Record<string, any>>(
+  const [properties, setProperties] = useState<Record<string, unknown>>(
     node.data.properties || {}
   );
   const propertyFields = getPropertyFields(node.data.label);
@@ -69,7 +69,7 @@ export function PropertiesPanel({
     setProperties(node.data.properties || {});
   }, [node]);
 
-  const handlePropertyChange = (name: string, value: any) => {
+  const handlePropertyChange = (name: string, value: unknown) => {
     const updatedProperties = { ...properties, [name]: value };
     setProperties(updatedProperties);
   };
@@ -104,6 +104,7 @@ export function PropertiesPanel({
             {field.type === "text" && (
               <Input
                 id={field.name}
+                // @ts-expect-error value is {} type
                 value={properties[field.name] || ""}
                 onChange={(e) =>
                   handlePropertyChange(field.name, e.target.value)
@@ -114,6 +115,7 @@ export function PropertiesPanel({
             {field.type === "textarea" && (
               <Textarea
                 id={field.name}
+                // @ts-expect-error value is {} type
                 value={properties[field.name] || ""}
                 onChange={(e) =>
                   handlePropertyChange(field.name, e.target.value)
@@ -124,6 +126,7 @@ export function PropertiesPanel({
 
             {field.type === "select" && field.options && (
               <Select
+                // @ts-expect-error value is {} type
                 value={properties[field.name] || ""}
                 onValueChange={(value) =>
                   handlePropertyChange(field.name, value)

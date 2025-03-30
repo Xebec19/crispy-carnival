@@ -6,13 +6,14 @@ import * as LucideIcons from "lucide-react";
 type TaskNodeData = {
   label: string;
   icon: string;
-  properties: Record<string, any>;
+  properties: Record<string, unknown>;
 };
 
 export const TaskNode = memo(({ data }: NodeProps<TaskNodeData>) => {
   // Dynamically get the icon from Lucide
   const IconComponent =
-    (LucideIcons as Record<string, LucideIcon>)[data.icon] || LucideIcons.Box;
+    (LucideIcons as unknown as Record<string, LucideIcon>)[data.icon] ||
+    LucideIcons.Box;
 
   return (
     <div className="px-4 py-2 shadow-md rounded-md bg-white border border-gray-200 w-48">
